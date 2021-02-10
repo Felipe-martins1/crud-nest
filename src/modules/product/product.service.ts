@@ -11,10 +11,27 @@ export class ProductService {
     const resultsPlain = JSON.parse(JSON.stringify(results));
     const products = resultsPlain.map((product) => {
       const productEntity = new Product();
+      productEntity.id = product.id;
       productEntity.product = product.product;
       productEntity.price = product.price;
       return productEntity;
     });
     return products;
+  }
+
+  async findById(id: string): Promise<Product> {
+    const conn = await this.mysql.getConnection();
+    const [results] = await conn.query('select * from products where id = ?', [
+      id,
+    ]);
+    const resultsPlain = JSON.parse(JSON.stringify(results));
+    const products = resultsPlain.map((product) => {
+      const productEntity = new Product();
+      productEntity.id = product.id;
+      productEntity.product = product.product;
+      productEntity.price = product.price;
+      return productEntity;
+    });
+    return products[0];
   }
 }
