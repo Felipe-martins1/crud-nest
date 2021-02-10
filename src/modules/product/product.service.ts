@@ -43,4 +43,10 @@ export class ProductService {
     ]);
     return entity;
   }
+
+  async remove(id: string): Promise<boolean> {
+    const conn = await this.mysql.getConnection();
+    await conn.query('delete from products where id = ? limit 1', [id]);
+    return true;
+  }
 }
