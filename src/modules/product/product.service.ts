@@ -49,4 +49,13 @@ export class ProductService {
     await conn.query('delete from products where id = ? limit 1', [id]);
     return true;
   }
+
+  async update(id: string, entity: Product): Promise<boolean> {
+    const conn = await this.mysql.getConnection();
+    await conn.query(
+      'update products set product = ?, price = ? where id = ?',
+      [entity.product, entity.price, id],
+    );
+    return true;
+  }
 }

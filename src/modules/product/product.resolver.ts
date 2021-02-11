@@ -19,9 +19,26 @@ export class ProductResolver {
     });
     return productsToReturn;
   }
+  @Query((returns) => Product, { name: 'getProductById' })
+  async getProductById(@Args('id') id: string): Promise<Product> {
+    return this.productService.findById(id);
+  }
 
   @Mutation((returns) => Product, { name: 'createProduct' })
   async create(@Args('input') input: ProductInput): Promise<Product> {
     return this.productService.create(input);
+  }
+
+  @Mutation((returns) => Boolean, { name: 'deleteProduct' })
+  async remove(@Args('id') id: string): Promise<boolean> {
+    return this.productService.remove(id);
+  }
+
+  @Mutation((returns) => Boolean, { name: 'updateProduct' })
+  async update(
+    @Args('id') id: string,
+    @Args('input') input: ProductInput,
+  ): Promise<boolean> {
+    return this.productService.update(id, input);
   }
 }

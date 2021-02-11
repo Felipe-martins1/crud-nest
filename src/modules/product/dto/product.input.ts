@@ -5,9 +5,9 @@ export class ProductInput {
   @Field({ nullable: true })
   id: number;
 
-  @Field()
+  @Field({ nullable: true })
   product: string;
 
-  @Field()
+  @Field({ nullable: true })
   price: number;
 }
